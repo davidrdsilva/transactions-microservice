@@ -1,10 +1,9 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AppService } from './transactions/services/app.service';
 import { config } from './config/general.config';
 import { typeOrmAsyncConfig } from './config/typeorm.config';
-import { AppController } from './transactions/controllers/app.controller';
+import { TransactionModule } from './transactions/modules/transaction.module';
 
 @Module({
     imports: [
@@ -13,8 +12,7 @@ import { AppController } from './transactions/controllers/app.controller';
             load: [config],
         }),
         TypeOrmModule.forRootAsync(typeOrmAsyncConfig),
+        TransactionModule,
     ],
-    controllers: [AppController],
-    providers: [AppService],
 })
 export class AppModule {}
