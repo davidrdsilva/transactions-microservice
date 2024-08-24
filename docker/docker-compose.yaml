@@ -1,0 +1,22 @@
+services:
+  transactions-database:
+    image: postgres:alpine
+    container_name: transactions-database
+    volumes:
+      - transactions-database-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: transactions
+    ports:
+      - "5432:5432"
+    networks:
+      - transactions-network
+
+networks:
+  transactions-network:
+    driver: bridge
+    external: true
+
+volumes:
+  transactions-database-data:
