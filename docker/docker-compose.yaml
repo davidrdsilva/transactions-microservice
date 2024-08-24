@@ -6,7 +6,7 @@ services:
       - transactions-database-data:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: root
+      POSTGRES_PASSWORD: dhhfn874_pdo|js__sundmdKJ7668
       POSTGRES_DB: transactions
     ports:
       - "5432:5432"
@@ -16,7 +16,6 @@ services:
 networks:
   transactions-network:
     driver: bridge
-    external: true
 
 volumes:
   transactions-database-data:
