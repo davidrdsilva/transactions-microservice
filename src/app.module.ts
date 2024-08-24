@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { AppService } from './transactions/services/app.service';
 import { config } from './config/general.config';
 import { typeOrmAsyncConfig } from './config/typeorm.config';
+import { AppController } from './transactions/controllers/app.controller';
 
 @Module({
     imports: [
