@@ -1,10 +1,11 @@
-import { Injectable } from '@nestjs/common';
-import { TransactionServiceInterface } from '../interfaces/transaction.service.interface';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { UserService } from 'src/user/services/user.service';
+import { Repository } from 'typeorm';
 import { CreateTransactionDto } from '../dtos/transaction.dto';
 import { Transaction } from '../entities/transaction.entity';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { UserService } from 'src/user/services/user.service';
+import { TransactionServiceInterface } from '../interfaces/transaction.service.interface';
+import { isUUID } from 'class-validator';
 
 @Injectable()
 export class TransactionService implements TransactionServiceInterface {
@@ -28,12 +29,26 @@ export class TransactionService implements TransactionServiceInterface {
         return await this.transactionRepository.save(newTransaction);
     }
 
-    findById(transactionId: string): Promise<Transaction> {
-        throw new Error('Method not implemented.');
+    async findOne(transactionId: string): Promise<Transaction> {
+        if (!isUUID(transactionId)) {
+            throw new BadRequestException('The provided parameter transactionId is not a valid UUID.');
+        }
+
+        const transaction = await this.transactionRepository.findOneBy({ id: transactionId });
+
+        if (!transaction) {
+            throw new NotFoundException('Transaction not found.');
+        }
+
+        return transaction;
     }
 
-    findByUserId(userId: string): Promise<Transaction[]> {
-        throw new Error('Method not implemented.');
+    async findByUserId(userId: string): Promise<Transaction[]> {
+        if (!isUUID(userId)) {
+            throw new BadRequestException('The provided parameter userId is not a valid UUID.');
+        }
+
+        return await this.transactionRepository.findBy({ senderUser: { id: userId } });
     }
 
     getHello(): string {
