@@ -15,7 +15,7 @@ export class TransactionService implements TransactionServiceInterface {
         private readonly userService: UserService,
     ) {}
 
-    async create(createTransactionDto: CreateTransactionDto): Promise<Transaction> {
+    async create(createTransactionDto: CreateTransactionDto): Promise<{ status: string }> {
         const senderUser = await this.userService.findById(createTransactionDto.senderUser);
         const receiverUser = await this.userService.findById(createTransactionDto.receiverUser);
 
@@ -26,7 +26,9 @@ export class TransactionService implements TransactionServiceInterface {
             receiverUser: receiverUser,
         });
 
-        return await this.transactionRepository.save(newTransaction);
+        await this.transactionRepository.save(newTransaction);
+
+        return { status: 'Transaction successful' };
     }
 
     async findOne(transactionId: string): Promise<Transaction> {
