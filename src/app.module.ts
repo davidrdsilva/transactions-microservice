@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { config } from './config/general.config';
-import { typeOrmAsyncConfig } from './config/typeorm.config';
+import { config } from './config/constants/general.config';
+import { typeOrmAsyncConfig } from './config/constants/typeorm.config';
 import { TransactionModule } from './transaction/modules/transaction.module';
 
 @Module({
