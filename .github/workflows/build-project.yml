@@ -19,3 +19,10 @@ jobs:
 
             - name: Build NestJS app
               run: npm run build
+
+    test:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Run unit tests
+              run: npm run test
