@@ -52,8 +52,4 @@ export class TransactionService implements TransactionServiceInterface {
 
         return await this.transactionRepository.findBy({ senderUser: { id: userId } });
     }
-
-    getHello(): string {
-        return 'Hello World!';
-    }
 }

@@ -51,9 +51,4 @@ export class TransactionController {
     async findByUserId(@Param('userId') userId: string): Promise<Transaction[]> {
         return await this.transactionService.findByUserId(userId);
     }
-
-    @Get()
-    getHello(): string {
-        return this.transactionService.getHello();
-    }
 }
