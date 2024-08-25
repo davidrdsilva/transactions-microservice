@@ -1,21 +1,19 @@
 services:
-  transactions-database:
-    image: postgres:alpine
-    container_name: transactions-database
-    volumes:
-      - transactions-database-data:/var/lib/postgresql/data
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: dhhfn874_pdo|js__sundmdKJ7668
-      POSTGRES_DB: transactions
-    ports:
-      - "5432:5432"
-    networks:
-      - transactions-network
+    transactions-database:
+        image: postgres:alpine
+        container_name: transactions-database
+        volumes:
+            - transactions-database-data:/var/lib/postgresql/data
+        env_file:
+            - .env
+        ports:
+            - '5432:5432'
+        networks:
+            - transactions-network
 
 networks:
-  transactions-network:
-    driver: bridge
+    transactions-network:
+        driver: bridge
 
 volumes:
-  transactions-database-data:
+    transactions-database-data:
