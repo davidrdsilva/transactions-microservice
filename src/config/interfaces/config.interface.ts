@@ -2,6 +2,7 @@ interface ApiConfigProps {
     apiUrl: string;
     httpTimeout: number;
     jwtSecret: string;
+    securityEnabled: boolean;
 }
 
 interface DatabaseConfigProps {

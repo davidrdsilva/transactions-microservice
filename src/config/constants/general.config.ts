@@ -6,6 +6,7 @@ export const config = (): ConfigProps => ({
         apiUrl: '',
         httpTimeout: 1000,
         jwtSecret: process.env.JWT_SECRET,
+        securityEnabled: process.env.SECURITY_ENABLED === 'true' ? true : false,
     },
     database: {
         main: {
