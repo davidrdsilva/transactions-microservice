@@ -4,14 +4,18 @@ import { Transaction } from '../entities/transaction.entity';
 import { TransactionService } from '../services/transaction.service';
 import { ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/guards/auth.guard';
+import { RolesGuard } from 'src/auth/guards/role.guard';
+import { Roles } from 'src/auth/decorators/role.decorator';
+import { Role } from 'src/auth/enums/role.enum';
 
 @ApiTags('transactions')
 @Controller('transactions')
+@UseGuards(JwtAuthGuard, RolesGuard)
 export class TransactionController {
     constructor(private readonly transactionService: TransactionService) {}
 
     @Post()
-    @UseGuards(JwtAuthGuard)
+    @Roles(Role.User)
     @HttpCode(201)
     @ApiOperation({
         summary: 'Inicia uma nova transferência.',
@@ -29,7 +33,7 @@ export class TransactionController {
     }
 
     @Get(':transactionId')
-    @UseGuards(JwtAuthGuard)
+    @Roles(Role.User)
     @HttpCode(200)
     @ApiOperation({
         summary: 'Retorna detalhes de uma transferência específica.',
@@ -43,7 +47,7 @@ export class TransactionController {
     }
 
     @Get('/user/:userId')
-    @UseGuards(JwtAuthGuard)
+    @Roles(Role.Admin)
     @HttpCode(200)
     @ApiOperation({
         summary: 'Lista de transferências de um usuário específico.',
