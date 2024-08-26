@@ -7,6 +7,7 @@ import { Repository } from 'typeorm';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { UserService } from 'src/user/services/user.service';
 import { User } from 'src/user/entities/user.entity';
+import { ConfigService } from '@nestjs/config';
 
 describe('TransactionController', () => {
     let transactionController: TransactionController;
@@ -32,6 +33,12 @@ describe('TransactionController', () => {
                     useValue: {
                         findById: jest.fn(),
                         findOneBy: jest.fn(),
+                    },
+                },
+                {
+                    provide: ConfigService,
+                    useValue: {
+                        get: jest.fn(),
                     },
                 },
             ],
