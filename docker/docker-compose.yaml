@@ -7,7 +7,21 @@ services:
         env_file:
             - .env
         ports:
-            - '5432:5432'
+            - 5432:5432
+        networks:
+            - transactions-network
+
+    transactions-microservice:
+        build:
+            context: ..
+            dockerfile: docker/Dockerfile
+        container_name: transactions-microservice
+        depends_on:
+            - transactions-database
+        env_file:
+            - ./.env
+        ports:
+            - 3000:3000
         networks:
             - transactions-network
 
