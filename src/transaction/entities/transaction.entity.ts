@@ -1,5 +1,7 @@
 import { User } from 'src/user/entities/user.entity';
 import {
+    BeforeInsert,
+    BeforeUpdate,
     Column,
     CreateDateColumn,
     Entity,
@@ -16,6 +18,12 @@ export class Transaction {
 
     @Column({ type: 'float8' })
     amount: number;
+
+    @BeforeInsert()
+    @BeforeUpdate()
+    roundAmount() {
+        this.amount = parseFloat(this.amount.toFixed(2));
+    }
 
     @Column()
     description: string;
