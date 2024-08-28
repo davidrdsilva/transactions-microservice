@@ -1,33 +1,17 @@
 services:
-    transactions-database:
-        image: postgres:alpine
-        container_name: transactions-database
-        volumes:
-            - transactions-database-data:/var/lib/postgresql/data
-        env_file:
-            - .env
-        ports:
-            - 5432:5432
-        networks:
-            - transactions-network
-
     transactions-microservice:
         build:
             context: ..
             dockerfile: docker/Dockerfile
         container_name: transactions-microservice
-        depends_on:
-            - transactions-database
         env_file:
-            - ./.env
+            - ../.env
         ports:
-            - 3000:3000
+            - 4000:4000
         networks:
-            - transactions-network
+            - bank-microservices-network
 
 networks:
-    transactions-network:
+    bank-microservices-network:
         driver: bridge
-
-volumes:
-    transactions-database-data:
+        external: true
