@@ -1,11 +1,12 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { isUUID } from 'class-validator';
+import { MessagingService } from 'src/rabbitmq/services/rabbitmq.service';
 import { UserService } from 'src/user/services/user.service';
 import { Repository } from 'typeorm';
 import { CreateTransactionDto } from '../dtos/transaction.dto';
 import { Transaction } from '../entities/transaction.entity';
 import { TransactionServiceInterface } from '../interfaces/transaction.service.interface';
-import { isUUID } from 'class-validator';
 
 @Injectable()
 export class TransactionService implements TransactionServiceInterface {
@@ -13,6 +14,7 @@ export class TransactionService implements TransactionServiceInterface {
         @InjectRepository(Transaction)
         private readonly transactionRepository: Repository<Transaction>,
         private readonly userService: UserService,
+        private readonly messagingService: MessagingService,
     ) {}
 
     async create(createTransactionDto: CreateTransactionDto): Promise<{ status: string }> {
@@ -27,6 +29,9 @@ export class TransactionService implements TransactionServiceInterface {
         });
 
         await this.transactionRepository.save(newTransaction);
+
+        // Sending a message to RabbitMQ when the user is created
+        await this.messagingService.sendMessage('transaction_created', newTransaction);
 
         return { status: 'Transaction successful' };
     }
