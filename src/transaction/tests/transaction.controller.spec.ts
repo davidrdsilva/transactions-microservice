@@ -8,6 +8,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { UserService } from 'src/user/services/user.service';
 import { User } from 'src/user/entities/user.entity';
 import { ConfigService } from '@nestjs/config';
+import { MessagingService } from 'src/messaging/services/messaging.service';
 
 describe('TransactionController', () => {
     let transactionController: TransactionController;
@@ -40,6 +41,12 @@ describe('TransactionController', () => {
                     provide: ConfigService,
                     useValue: {
                         get: jest.fn(),
+                    },
+                },
+                {
+                    provide: MessagingService,
+                    useValue: {
+                        sendMessage: jest.fn(),
                     },
                 },
             ],
