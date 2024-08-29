@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { isUUID } from 'class-validator';
-import { MessagingService } from 'src/rabbitmq/services/rabbitmq.service';
+import { MessagingService } from 'src/messaging/services/messaging.service';
 import { UserService } from 'src/user/services/user.service';
 import { Repository } from 'typeorm';
 import { CreateTransactionDto } from '../dtos/transaction.dto';

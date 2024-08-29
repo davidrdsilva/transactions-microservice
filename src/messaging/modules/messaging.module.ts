@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-import { MessagingService } from '../services/rabbitmq.service';
+import { MessagingService } from '../services/messaging.service';
 
 @Module({
     imports: [
