@@ -30,7 +30,7 @@ export class TransactionService implements TransactionServiceInterface {
 
         await this.transactionRepository.save(newTransaction);
 
-        // Sending a message to RabbitMQ when the user is created
+        // Sending a message to RabbitMQ when a transaction is made
         await this.messagingService.sendMessage('transaction_created', newTransaction);
 
         return { status: 'Transaction successful' };

@@ -5,6 +5,10 @@ interface ApiConfigProps {
     securityEnabled: boolean;
 }
 
+interface Microservices {
+    rabbitMqUrl: string;
+}
+
 interface DatabaseConfigProps {
     type: string;
     host: string;
@@ -21,4 +25,5 @@ export interface ConfigProps {
     database: {
         main: DatabaseConfigProps;
     };
+    microservices: Microservices;
 }
