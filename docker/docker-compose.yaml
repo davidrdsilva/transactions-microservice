@@ -1,7 +1,7 @@
 services:
     rabbitmq:
         image: rabbitmq:3-management-alpine
-        container_name: 'rabbitmq'
+        container_name: rabbitmq
         ports:
             - 5672:5672
             - 15672:15672
@@ -16,8 +16,22 @@ services:
             context: ..
             dockerfile: docker/Dockerfile
         container_name: transactions-microservice
-        env_file:
-            - ../.env
+        depends_on:
+            - rabbitmq
+        environment:
+            - SERVER_PORT=4000
+            - SECURITY_ENABLED=true
+            - JWT_SECRET=thisismysecretjwt
+
+            - DB_HOST=bank-microservices-database
+            - DB_PORT=5432
+            - DB_USER=postgres
+            - DB_PASSWORD=dhhfn874_pdo|js__sundmdKJ7668
+            - DB_NAME=bank-microservices-database
+            - DB_SYNCRONIZE=true
+
+            - RABBIT_MQ_URL=amqp://rabbitmq:5672
+
         ports:
             - 4000:4000
         networks:
